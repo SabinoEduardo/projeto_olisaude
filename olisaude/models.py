@@ -10,8 +10,8 @@ class Costumer(models.Model):
         ("F", "Female"),
     ]
     code = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=50, null=False, blank=False)
-    last_name = models.CharField(max_length=50, null=False, blank=False)
+    first_name = models.CharField(max_length=50, blank=False)
+    last_name = models.CharField(max_length=50, blank=False)
     gender = models.CharField(max_length=1, choices=gender_choice)
     birth_date = models.DateField(null=False)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -34,7 +34,7 @@ class HearthProblem(models.Model):
         (1, "Low"),
         (2, "High"),
     ]
-    name = models.CharField(max_length=80, null=False, blank=False)
+    name = models.CharField(max_length=80, blank=False)
     degree = models.IntegerField(choices=degre_choice)
     code_costumer = models.ForeignKey(Costumer, on_delete=models.CASCADE)
 
