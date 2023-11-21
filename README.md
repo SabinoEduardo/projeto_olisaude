@@ -6,10 +6,10 @@ Os serviços da Oli usam principalmente tecnologias Kotlin e Springboot. No enta
 
 # O Desafio
 Crie uma API simples para gerenciar Clientes. Esta API deve permitir:
-- Criar um cliente
-- Editar um cliente
-- Obter um cliente específico
-- Listar clientes
+- Criar um cliente - feito (falta cadartrar os problemas de saúde do costumer)
+- Editar um cliente - feito (falta atualizar os problemas de saúde do costumer)
+- Obter um cliente específico - feito
+- Listar clientes - feito
 
 Um Cliente deve ter os seguintes campos:
 - nome
