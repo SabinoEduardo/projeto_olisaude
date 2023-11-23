@@ -1,0 +1,8 @@
+# instala o ambiente virtual, ativa e instala as bibliotecas que estão em requirements.txt
+venv/
+
+# Confiura as variaveis de ambiente
+.env
+
+# Configura em settings as informações do banco de dados
+db.sqlite3

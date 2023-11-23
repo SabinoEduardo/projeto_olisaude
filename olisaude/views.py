@@ -118,6 +118,7 @@ def updateCostumer(request, code_costumer):
             
             msg_error = form.errors
             return JsonResponse(msg_error, safe=False, json_dumps_params={'indent':4})
+        
         data = serializador.serializerCostumers(costumer=(costumer,))
         return JsonResponse(data, safe=False, json_dumps_params={'indent':4, 'ensure_ascii':False})
     except:
