@@ -22,6 +22,7 @@ def serializerCostumers(costumer, hearth_problems=None):
             
             if hearth_problems != None:
                 for hearth in hearth_problems:
+                    dict_problems['id'] = hearth.id
                     dict_problems['name'] = hearth.name
                     dict_problems['degree'] = hearth.degree
                     list_problems.append(dict_problems.copy())
@@ -40,3 +41,23 @@ def serializerCostumers(costumer, hearth_problems=None):
     return data
 
 
+def serializerproblems(problem):
+    dict_problem = dict()
+    data = list()
+
+    #data.append({'code_costumer':code_costumer})
+
+    
+    code_costumer = problem.code_costumer.code
+    full_name_costumer = f'{problem.code_costumer.first_name} {problem.code_costumer.last_name}'
+    data.append({'code_costumer':code_costumer, 'full_name_costumer': full_name_costumer})
+    
+    dict_problem['id'] = problem.id
+    dict_problem['name'] = problem.name
+    dict_problem['degree'] = problem.degree
+
+    problems = {'health of problems':dict_problem.copy()}
+
+    data.append(problems)
+    data = JsonResponse(data, safe=False, json_dumps_params={'indent':4, 'ensure_ascii':False})
+    return data
