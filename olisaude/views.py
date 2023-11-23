@@ -32,7 +32,7 @@ def toListCostumers(request):
     costumers = Costumer.objects.all() # get all objetcts
     if costumers:
         data = serializador.serializerCostumers(costumer=costumers)
-        return data
+        return JsonResponse(data, safe=False, json_dumps_params={'indent':4, 'ensure_ascii':False})
     
     # if database is empity
     data = {
@@ -48,7 +48,7 @@ def getCostumer(request, code):
         problems = HearthProblem.objects.filter(code_costumer__exact=costumer.code)
 
         data = serializador.serializerCostumers((costumer,), hearth_problems=problems)
-        return data
+        return JsonResponse(data, safe=False, json_dumps_params={'indent':4, 'ensure_ascii':False})
     
     except:
         data = {
@@ -74,7 +74,7 @@ def searchCostumer(request):
 
     if costumer:
         data = serializador.serializerCostumers(costumer=costumer)
-        return data
+        return JsonResponse(data, safe=False, json_dumps_params={'indent':4, 'ensure_ascii':False})
     
     data = {
         'status_code': 404,
@@ -107,18 +107,25 @@ def updateCostumer(request, code_costumer):
     """
         update datas of costumers withoud hearth problems
     """
-    costumer = Costumer.objects.get(code=code_costumer)
+    try:
+        costumer = Costumer.objects.get(code=code_costumer)
 
-    if request.method in 'POST':
-        form = forms.CostumerForm(request.POST, instance=costumer)
-        if form.is_valid(): # valida se os dados são válidos
-            form.save()
-            return redirect('costumer:get_costumer', code=costumer.code)
-        
-        msg_error = form.errors
-        return JsonResponse(msg_error, safe=False, json_dumps_params={'indent':4})
-    
-    return serializador.serializerCostumers(costumer=(costumer,))
+        if request.method in 'POST':
+            form = forms.CostumerForm(request.POST, instance=costumer)
+            if form.is_valid(): # valida se os dados são válidos
+                form.save()
+                return redirect('costumer:get_costumer', code=costumer.code)
+            
+            msg_error = form.errors
+            return JsonResponse(msg_error, safe=False, json_dumps_params={'indent':4})
+        data = serializador.serializerCostumers(costumer=(costumer,))
+        return JsonResponse(data, safe=False, json_dumps_params={'indent':4, 'ensure_ascii':False})
+    except:
+        data = {
+        'status_code': 404,
+        'message': 'Costumer Not Found'
+        }
+        return JsonResponse(data, safe=False, json_dumps_params={'indent':4})
 
 
 @csrf_exempt     
@@ -179,5 +186,5 @@ def updateHearthProblems(request, id_problem):
             return redirect('costumer:get_costumer', code=code)
         msg_error = form.errors
         return JsonResponse(msg_error, safe=False, json_dumps_params={'indent':4})
-    
-    return serializador.serializerproblems(problem)
+    data = serializador.serializerproblems(problem)
+    return JsonResponse(data, safe=False, json_dumps_params={'indent':4, 'ensure_ascii':False})
